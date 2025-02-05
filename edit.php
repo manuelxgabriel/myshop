@@ -1,4 +1,5 @@
 <?php
+$pdo = "";
 include "database_connection.php";
 
 
@@ -11,8 +12,8 @@ $address = "";
 $errorMessage = "";
 $successMessage = "";
 
+// Check if the HTTP request method is GET
 if( $_SERVER['REQUEST_METHOD'] == "GET" ){
-    // GET method: show the data of th client
 
     if(!isset($_GET["id"])){
         header('Location: /myshop/index.php');
@@ -20,8 +21,6 @@ if( $_SERVER['REQUEST_METHOD'] == "GET" ){
     }
 
     $id = $_GET["id"];
-
-    echo "<script>console.log('Id: ".$id."')</script> ";
 
     // Read the row of the selected client from database table
     $sql = "SELECT * FROM clients WHERE id =$id";
@@ -38,16 +37,6 @@ if( $_SERVER['REQUEST_METHOD'] == "GET" ){
     $phone = $row["phone"];
     $address = $row["address"];
 
-//    while($row = $result->fetch()){
-//
-//        $name = $row["name"];
-//        $email = $row["email"];
-//        $phone = $row["phone"];
-//        $address = $row["address"];
-//        echo $name . $email . $phone . $address . "<br>";
-//        echo "<script>console.log('Id: ".$name."')</script> ";
-//    }
-
 
 } else {
     // POST method: Update the data of the client
@@ -63,12 +52,7 @@ if( $_SERVER['REQUEST_METHOD'] == "GET" ){
             $errorMessage = "All fields are required";
         }
 
-        $sql = "UPDATE clients SET name = '$name', email = '{$email}', phone = '{$phone}' WHERE id = {$id}";
-
-//        $sql = "UPDATE clients"
-//            ."SET name = '{$name}', email = '{$email}', phone = '{$phone}', address = '{$address}' "
-//            ."WHERE id = {$id}";
-
+        $sql = "UPDATE clients SET name = '$name', email = '{$email}', phone = '{$phone}', address = '{$address}' WHERE id = {$id}";
         $result = $pdo->query($sql);
 
         if (!$result){
